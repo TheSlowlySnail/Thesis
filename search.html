@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<link rel="stylesheet" type="text/css" href="style.css" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<head>
+    <script type="text/javascript">
+
+
+
+
+        var xmlHttpObject = false;
+
+
+        // Überprüfen ob XMLHttpRequest-Klasse vorhanden und erzeugen von Objekte für IE7, Firefox, etc.
+        //if (typeof XMLHttpRequest != 'undefined')
+        {
+
+            xmlHttpObject = new XMLHttpRequest();
+
+        }
+
+        // Wenn im oberen Block noch kein Objekt erzeugt, dann versuche XMLHTTP-Objekt zu erzeugen
+        // Notwendig für IE6 oder IE5
+        if (!xmlHttpObject)
+        {
+            try
+            {
+                xmlHttpObject = new ActiveXObject("Msxml2.XMLHTTP");
+
+            }
+            catch(e)
+            {
+                try
+                {
+                    xmlHttpObject = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                catch(e)
+                {
+                    xmlHttpObject = null;
+
+                }
+            }
+        }
+        function request(){
+
+            xmlHttpObject.open("POST","search.php",true);
+
+            xmlHttpObject.send();
+            xmlHttpObject.onreadystatechange = function(){
+
+                document.getElementById("select").innerHTML = xmlHttpObject.responseText;
+
+            };
+
+        }
+
+    </script>
+    <style type="text/css">
+        body{
+            font-family: 'Open Sans', sans-serif;
+            font-size:24px;
+
+        }
+    </style>
+
+    <meta charset="utf-8">
+    <title>Unbenanntes Dokument</title>
+</head>
+
+<body>
+<form action="search.php" method="post">
+    <input type="text" name="titel"><br>
+    <input type="submit" value="Suchen" onclick="request()" >
+</form>
+<div id="select"></div>
+
+</body>
+</html>
